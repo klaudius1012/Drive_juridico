@@ -1,0 +1,87 @@
+Título do projeto
+
+Desenvolvimento de sistema web interno (intranet) para escritório de advocacia previdenciária
+
+Descrição do projeto
+
+Estou buscando desenvolvedor(a) para criar um sistema web interno para um pequeno escritório de advocacia previdenciária (6 usuários).
+
+O sistema será utilizado para organização interna de processos, controle financeiro básico e armazenamento de documentos.
+
+A aplicação será hospedada em cloud (Railway) com banco PostgreSQL.
+
+Objetivo
+
+Centralizar e organizar:
+
+• Cadastro de processos judiciais e administrativos
+• Controle de receitas e despesas
+• Upload e organização de documentos
+• Dashboard com indicadores básicos
+
+Escopo Funcional (V1)
+
+1. Autenticação
+
+• Login com email e senha
+• Controle de acesso por perfil (Admin, Advogado, Administrativo)
+• JWT ou mecanismo equivalente
+
+2. Módulo Processos
+
+• Cadastro de processos
+• Edição de processos
+• Status (Ativo, Suspenso, Encerrado)
+• Filtro por advogado
+• Histórico simples interno
+
+3. Módulo Financeiro
+
+• Cadastro de receitas
+• Cadastro de despesas
+• Relatório mensal
+• Exportação CSV
+
+4. Documentos
+
+• Upload de arquivos (PDF, DOCX, JPG)
+• Vinculação ao processo
+• Controle básico de versão
+
+5. Dashboard
+
+• Total de processos ativos
+• Receita mensal
+• Despesa mensal
+• Prazos próximos
+
+Requisitos técnicos desejáveis
+
+• Backend em Java (Spring Boot) ou Node.js
+• PostgreSQL
+• Frontend em React ou similar
+• Deploy em Railway
+• Código organizado e documentado
+
+Fora do escopo
+
+• Integração com tribunais
+• Robôs automáticos
+• WhatsApp
+• Aplicativo mobile
+• Integrações externas
+
+Informações importantes
+
+• Sistema para até 6 usuários
+• Uso interno
+• Interface simples e funcional
+• Foco em organização e segurança
+
+O que preciso na proposta
+
+• Prazo estimado
+• Valor estimado
+• Stack sugerida
+• Experiência prévia com projetos similares
+• Se inclui suporte pós-entrega

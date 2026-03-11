@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intranet Corporativa - Documentos</title>
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link href="../CSS/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Login Screen -->
+    <div id="login-screen">
+      <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px">
+        <div class="text-center mb-4">
+          <i class="fas fa-network-wired fa-3x text-primary"></i>
+          <h3 class="mt-2">Acesso Restrito</h3>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Usuário</label>
+          <input
+            type="text"
+            id="login-user"
+            class="form-control"
+            placeholder="admin"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Senha</label>
+          <input
+            type="password"
+            id="login-pass"
+            class="form-control"
+            placeholder="1234"
+          />
+        </div>
+        <button onclick="checkLogin()" class="btn btn-primary w-100">
+          Entrar
+        </button>
+        <div
+          id="login-error"
+          class="text-danger mt-2 text-center"
+          style="display: none"
+        >
+          Credenciais inválidas!
+        </div>
+      </div>
+    </div>
+
+    <div id="app-container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <h3 class="text-center mb-4">
+          Intranet <i class="fas fa-network-wired"></i>
+        </h3>
+        <a href="dashboard.html" class="nav-link" id="nav-dashboard"
+          ><i class="fas fa-tachometer-alt"></i> Dashboard</a
+        >
+        <a href="processos.html" class="nav-link" id="nav-processos"
+          ><i class="fas fa-gavel"></i> Processos</a
+        >
+        <a href="financeiro.html" class="nav-link" id="nav-financeiro"
+          ><i class="fas fa-chart-line"></i> Financeiro</a
+        >
+        <a href="documento.html" class="nav-link active" id="nav-documentos"
+          ><i class="fas fa-folder-open"></i> Documentos</a
+        >
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 id="page-title">Repositório de Documentos</h2>
+          <div class="user-info d-flex align-items-center">
+            <span class="me-2">Olá, Administrador</span>
+            <img
+              src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff"
+              class="rounded-circle"
+              width="40"
+            />
+          </div>
+        </div>
+
+        <!-- SEÇÃO: DOCUMENTOS -->
+        <div id="documentos" class="section-container active">
+          <div class="card shadow-sm">
+            <div
+              class="card-header bg-white d-flex justify-content-between align-items-center"
+            >
+              <h5 class="mb-0">Gestão de Arquivos</h5>
+              <div class="d-flex gap-2">
+                <button
+                  id="btn-nova-pasta"
+                  class="btn btn-outline-secondary btn-sm"
+                >
+                  <i class="fas fa-folder-plus"></i> Nova Pasta
+                </button>
+                <button id="btn-upload" class="btn btn-primary btn-sm">
+                  <i class="fas fa-cloud-upload-alt"></i> Upload
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- Breadcrumb -->
+              <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb" id="breadcrumb-container">
+                  <li class="breadcrumb-item active">Raiz</li>
+                </ol>
+              </nav>
+              <div class="row" id="lista-documentos">
+                <!-- Documentos carregados via JavaScript -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Nova Pasta -->
+    <div
+      class="modal fade"
+      id="modalNovaPasta"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nova Pasta</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formNovaPasta">
+              <div class="mb-3">
+                <label for="nomePasta" class="form-label">Nome da Pasta</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nomePasta"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button type="button" class="btn btn-primary" id="btnSalvarPasta">
+              Criar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Renomear -->
+    <div class="modal fade" id="modalRenomear" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Renomear Item</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formRenomear">
+              <input type="hidden" id="renomearId" />
+              <div class="mb-3">
+                <label for="novoNome" class="form-label">Novo Nome</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="novoNome"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="btnSalvarRenomeacao"
+            >
+              Salvar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Upload -->
+    <div class="modal fade" id="modalUpload" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Upload de Arquivo</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formUpload">
+              <div class="mb-3">
+                <label for="uploadArquivo" class="form-label">Arquivo</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="uploadArquivo"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="uploadProcesso" class="form-label"
+                  >Vincular ao Processo (Opcional)</label
+                >
+                <select class="form-select" id="uploadProcesso">
+                  <option value="">Nenhum</option>
+                  <!-- Options will be populated by JS -->
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button type="button" class="btn btn-primary" id="btnSalvarUpload">
+              Enviar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fim do app-container -->
+
+    <!-- Scripts -->
+    <script src="../scripts/autenticar.js"></script>
+    <script src="../scripts/script.js"></script>
+    <script src="../scripts/funcoes_botoes.js"></script>
+    <script src="../scripts/scripts_documento.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

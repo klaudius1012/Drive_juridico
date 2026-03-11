@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intranet Corporativa - Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link href="../CSS/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Login Screen -->
+    <div id="login-screen">
+      <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px">
+        <div class="text-center mb-4">
+          <i class="fas fa-network-wired fa-3x text-primary"></i>
+          <h3 class="mt-2">Acesso Restrito</h3>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Usuário</label>
+          <input
+            type="text"
+            id="login-user"
+            class="form-control"
+            placeholder="admin"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Senha</label>
+          <input
+            type="password"
+            id="login-pass"
+            class="form-control"
+            placeholder="1234"
+          />
+        </div>
+        <button onclick="checkLogin()" class="btn btn-primary w-100">
+          Entrar
+        </button>
+        <div
+          id="login-error"
+          class="text-danger mt-2 text-center"
+          style="display: none"
+        >
+          Credenciais inválidas!
+        </div>
+      </div>
+    </div>
+
+    <div id="app-container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <h3 class="text-center mb-4">
+          Intranet <i class="fas fa-network-wired"></i>
+        </h3>
+        <a href="dashboard.html" class="nav-link active" id="nav-dashboard"
+          ><i class="fas fa-tachometer-alt"></i> Dashboard</a
+        >
+        <a href="processos.html" class="nav-link" id="nav-processos"
+          ><i class="fas fa-gavel"></i> Processos</a
+        >
+        <a href="financeiro.html" class="nav-link" id="nav-financeiro"
+          ><i class="fas fa-chart-line"></i> Financeiro</a
+        >
+        <a href="documento.html" class="nav-link" id="nav-documentos"
+          ><i class="fas fa-folder-open"></i> Documentos</a
+        >
+        <a
+          href="#"
+          class="nav-link mt-4 border-top pt-3"
+          id="btn-novo-usuario-modal"
+        >
+          <i class="fas fa-user-plus"></i> Novo Usuário
+        </a>
+        <a href="#" class="nav-link" id="btn-gerenciar-usuarios-modal">
+          <i class="fas fa-users-cog"></i> Gerenciar Usuários
+        </a>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 id="page-title">Dashboard Geral</h2>
+          <div class="user-info d-flex align-items-center">
+            <span class="me-2">Olá, Administrador</span>
+            <img
+              src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff"
+              class="rounded-circle"
+              width="40"
+            />
+          </div>
+        </div>
+
+        <!-- SEÇÃO: DASHBOARD -->
+        <div id="dashboard" class="section-container active">
+          <div class="row mb-4">
+            <div class="col-md-4">
+              <div class="card card-indicator bg-primary text-white p-3">
+                <h5>Processos Ativos</h5>
+                <h2 id="dash-proc-count">12</h2>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card card-indicator bg-success text-white p-3">
+                <h5>Receita Mensal</h5>
+                <h2 id="dash-receita">R$ 45.000</h2>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card card-indicator bg-danger text-white p-3">
+                <h5>Despesas Mensal</h5>
+                <h2 id="dash-despesa">R$ 12.500</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-8">
+              <div class="card p-3 shadow-sm">
+                <h5>Fluxo de Caixa (Últimos 6 meses)</h5>
+                <canvas id="financeChart"></canvas>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card p-3 shadow-sm">
+                <h5>Status dos Processos</h5>
+                <canvas id="processChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fim do app-container -->
+
+    <!-- Modal Novo Usuário -->
+    <div
+      class="modal fade"
+      id="modalNovoUsuario"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cadastrar Novo Usuário</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formNovoUsuario">
+              <div class="mb-3">
+                <label for="novoUsuarioUser" class="form-label"
+                  >Nome de Usuário</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="novoUsuarioUser"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="novoUsuarioPass" class="form-label">Senha</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="novoUsuarioPass"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button type="button" class="btn btn-primary" id="btnSalvarUsuario">
+              Salvar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Gerenciar Usuários -->
+    <div
+      class="modal fade"
+      id="modalGerenciarUsuarios"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Gerenciar Usuários</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted small">
+              Lista de usuários cadastrados no sistema.
+            </p>
+            <ul class="list-group" id="listaDeUsuarios">
+              <!-- Usuários serão carregados aqui via JS -->
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../scripts/autenticar.js"></script>
+    <script src="../scripts/script.js"></script>
+    <script src="../scripts/funcoes_botoes.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

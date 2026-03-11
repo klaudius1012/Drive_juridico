@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intranet Corporativa - Financeiro</title>
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link href="../CSS/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Login Screen -->
+    <div id="login-screen">
+      <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px">
+        <div class="text-center mb-4">
+          <i class="fas fa-network-wired fa-3x text-primary"></i>
+          <h3 class="mt-2">Acesso Restrito</h3>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Usuário</label>
+          <input
+            type="text"
+            id="login-user"
+            class="form-control"
+            placeholder="admin"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Senha</label>
+          <input
+            type="password"
+            id="login-pass"
+            class="form-control"
+            placeholder="1234"
+          />
+        </div>
+        <button onclick="checkLogin()" class="btn btn-primary w-100">
+          Entrar
+        </button>
+        <div
+          id="login-error"
+          class="text-danger mt-2 text-center"
+          style="display: none"
+        >
+          Credenciais inválidas!
+        </div>
+      </div>
+    </div>
+
+    <div id="app-container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <h3 class="text-center mb-4">
+          Intranet <i class="fas fa-network-wired"></i>
+        </h3>
+        <a href="dashboard.html" class="nav-link" id="nav-dashboard"
+          ><i class="fas fa-tachometer-alt"></i> Dashboard</a
+        >
+        <a href="processos.html" class="nav-link" id="nav-processos"
+          ><i class="fas fa-gavel"></i> Processos</a
+        >
+        <a href="financeiro.html" class="nav-link active" id="nav-financeiro"
+          ><i class="fas fa-chart-line"></i> Financeiro</a
+        >
+        <a href="documento.html" class="nav-link" id="nav-documentos"
+          ><i class="fas fa-folder-open"></i> Documentos</a
+        >
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 id="page-title">Controle Financeiro</h2>
+          <div class="user-info d-flex align-items-center">
+            <span class="me-2">Olá, Administrador</span>
+            <img
+              src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff"
+              class="rounded-circle"
+              width="40"
+            />
+          </div>
+        </div>
+
+        <!-- SEÇÃO: FINANCEIRO -->
+        <div id="financeiro" class="section-container active">
+          <div class="card shadow-sm mb-4">
+            <div
+              class="card-header bg-white d-flex justify-content-between align-items-center"
+            >
+              <h5 class="mb-0">Controle de Receitas e Despesas</h5>
+              <button id="btn-nova-transacao" class="btn btn-success btn-sm">
+                <i class="fas fa-plus"></i> Nova Transação
+              </button>
+            </div>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Conteúdo carregado via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Nova Transação -->
+    <div
+      class="modal fade"
+      id="modalNovaTransacao"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nova Transação</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formNovaTransacao">
+              <div class="mb-3">
+                <label for="transacaoDescricao" class="form-label"
+                  >Descrição</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="transacaoDescricao"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="transacaoTipo" class="form-label">Tipo</label>
+                <select class="form-select" id="transacaoTipo">
+                  <option value="Receita">Receita</option>
+                  <option value="Despesa">Despesa</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="transacaoValor" class="form-label"
+                  >Valor (R$)</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="transacaoValor"
+                  step="0.01"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="btnSalvarTransacao"
+            >
+              Salvar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fim do app-container -->
+
+    <!-- Scripts -->
+    <script src="../scripts/autenticar.js"></script>
+    <script src="../scripts/script.js"></script>
+    <script src="../scripts/funcoes_botoes.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

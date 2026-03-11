@@ -1,0 +1,22 @@
+🚀 **Projeto em Destaque: Drive Jurídico - Intranet para Escritórios de Advocacia**
+
+Compartilho com vocês o desenvolvimento do **Drive Jurídico**, uma aplicação web focada na organização e gestão interna de escritórios de advocacia. O objetivo é centralizar processos, documentos e o controle financeiro em uma interface intuitiva e eficiente.
+
+💡 **Principais Funcionalidades Implementadas (V1):**
+
+✅ **Gestão de Processos:** Cadastro detalhado, acompanhamento de status e vinculação automática de pastas de documentos.
+✅ **Controle Financeiro:** Registro de receitas e despesas com visualização clara do fluxo de caixa.
+✅ **Gestão de Documentos:** Upload, organização por pastas e visualização rápida de arquivos.
+✅ **Dashboard Estratégico:** Indicadores de desempenho e gráficos para tomada de decisão.
+✅ **Segurança:** Sistema de login e gestão de usuários.
+
+🛠️ **Stack Tecnológica:**
+*   **Backend:** Node.js & Express
+*   **Banco de Dados:** SQLite
+*   **Frontend:** JavaScript (ES6+), Bootstrap 5 & Chart.js
+
+Este projeto tem sido uma excelente oportunidade para aplicar conceitos de arquitetura MVC, manipulação de arquivos e construção de APIs RESTful.
+
+🔜 **Próximos passos:** Implementação de autenticação JWT, perfis de acesso e deploy na nuvem!
+
+#NodeJS #Javascript #WebDevelopment #LegalTech #FullStack #Portfolio #Coding

@@ -1,0 +1,232 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --primary-color: #4e73df;
+  --secondary-color: #858796;
+  --success-color: #1cc88a;
+  --danger-color: #e74a3b;
+  --light-bg: #f8f9fc;
+  --card-bg: #ffffff;
+  --text-color: #5a5c69;
+  --heading-color: #4e73df;
+}
+
+body {
+  background-color: var(--light-bg);
+  font-family: "Poppins", sans-serif;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--heading-color);
+  font-weight: 600;
+}
+
+.container {
+  max-width: 900px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+/* Estilo dos Cards */
+.card {
+  background-color: var(--card-bg);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  margin-bottom: 30px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.card-title {
+  color: var(--primary-color);
+  font-weight: 700;
+  border-bottom: 2px solid #f0f2f5;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+/* Campos de Formulário */
+.form-control,
+.form-select {
+  border-radius: 10px;
+  border: 1px solid #d1d3e2;
+  padding: 10px 15px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+/* Botões */
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #2e59d9;
+  border-color: #2653d4;
+  transform: scale(1.02);
+}
+
+/* Tabela */
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  background-color: #eaecf4;
+  color: var(--heading-color);
+  border-bottom: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.table tbody tr {
+  transition: background-color 0.2s;
+}
+
+.table tbody tr:hover {
+  background-color: #f8f9fc;
+}
+
+.table input {
+  width: 80px;
+  text-align: center;
+}
+
+/* Status (Aprovado/Reprovado) */
+.status-pass {
+  color: var(--success-color);
+  font-weight: 700;
+  background-color: rgba(28, 200, 138, 0.1);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.status-fail {
+  color: var(--danger-color);
+  font-weight: 700;
+  background-color: rgba(231, 74, 59, 0.1);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+/* Destaque BNCC */
+.bncc-badge {
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: 1rem;
+  padding: 8px 15px;
+  border-radius: 50px;
+  box-shadow: 0 3px 10px rgba(78, 115, 223, 0.3);
+}
+
+/* Gerador de Planos */
+.generated-plan {
+  border-left: 5px solid var(--primary-color);
+  display: none;
+}
+
+.generated-plan h2 {
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Impressão */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .generated-plan {
+    display: block !important;
+    border: none;
+    box-shadow: none;
+  }
+  body {
+    background-color: white;
+  }
+  .container {
+    margin: 0;
+    max-width: 100%;
+    padding: 0;
+  }
+  .card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+}
+
+/* Timeline Moderno */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+  border-left: 2px solid #e3e6f0;
+  margin-top: 1.5rem;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -2.4rem;
+  top: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  background: #fff;
+  border: 3px solid var(--primary-color);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.timeline-time {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+/* Animação Suave de Entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
